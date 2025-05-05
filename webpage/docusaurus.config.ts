@@ -5,11 +5,11 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 const config: Config = {
-  title: 'Se não mudar, mamou',
+  title: 'Arquitetura e Construção de Backends',
   favicon: 'img/firelink.png',
 
   url: 'https://firelink-library.github.io',
-  baseUrl: '/docusaurus-template',
+  baseUrl: '/backend',
 
   organizationName: 'Firelink Library',
   projectName: 'docusaurus-template',
