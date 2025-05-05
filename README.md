@@ -5,6 +5,8 @@ slug: /
 
 # Introdução
 
+Ops.
+
 Este é apenas um template para você poder criar um repositório de conteúdo
 rapidamente e com uma configuração opinionada do Docusaurus.
 
