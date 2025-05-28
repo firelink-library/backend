@@ -36,9 +36,9 @@ Afinal, o que são sistemas síncronos e assíncronos?
 * **AsyncIO no Python**
 
   * Biblioteca padrão desde o Python 3.4, com sintaxe `async`/`await` (oficialmente desde o 3.5).
-  * **Corrotinas**: funções marcadas com `async def` que podem pausar sua execução em `await`.
-  * **Tarefas**: wrappers criados com `asyncio.create_task()` para executar corrotinas concorrentemente.
-  * **`asyncio.gather()`** e **`asyncio.wait()`** agrupam múltiplas corrotinas e esperam sua conclusão.
+  * ***Coroutines***: funções marcadas com `async def` que podem pausar sua execução em `await`.
+  * **Tarefas**: wrappers criados com `asyncio.create_task()` para executar *coroutines* concorrentemente.
+  * **`asyncio.gather()`** e **`asyncio.wait()`** agrupam múltiplas *coroutines* e esperam sua conclusão.
 
 * **Casos de uso práticos**
 
@@ -197,7 +197,7 @@ Porque eu quase esqueci na última seção, então para não esquecer, já estou
 
 :::
 
-Para os próximos exemplos, vamos discultir alguns conceitos de utilização do AsyncIO. Ele, por padrão vem na biblioteca padrão do Python, então não é necessário instalar nada. CONTUDO, é uma boa prática fazer a separação de um ambiente virtual para cada projeto, então vamos criar um ambiente virtual para o nosso projeto.
+Para os próximos exemplos, vamos discutir alguns conceitos de utilização do AsyncIO. Ele, por padrão vem na biblioteca padrão do Python, então não é necessário instalar nada. CONTUDO, é uma boa prática fazer a separação de um ambiente virtual para cada projeto, então vamos criar um ambiente virtual para o nosso projeto.
 
 ```bash
 python3 -m venv env
@@ -245,10 +245,10 @@ Quanto utilizamos a palavra chave `async` estamos definindo que aquela função 
 
 A chamada `asyncio.run(main())` é o entry-point de chamada para o nosso sistema. É ele que permite nossa execução assíncrona.  O elemento fundamental para a execução do código assíncrono é o `event-loop`. Ele é fundamental para a coordenar a execução das tarefas sem bloquear o fluxo de execução principal do programa.
 
-O `event-loop` é uma estrutura que continuamente monitora e processa eventos de diferentes fontes, como entradas, chamadas de rede ou mesmo eventos de temporizadores. Ele é o responsável por acionar os `handlers` ou `callbacks` específicos de cada evento. A chamada `asyncio.run` é responsável por fazer a criação do `event-loop` e executar a corrotina principal.
+O `event-loop` é uma estrutura que continuamente monitora e processa eventos de diferentes fontes, como entradas, chamadas de rede ou mesmo eventos de temporizadores. Ele é o responsável por acionar os `handlers` ou `callbacks` específicos de cada evento. A chamada `asyncio.run` é responsável por fazer a criação do `event-loop` e executar a *coroutine* principal.
 
 São responsabilidades do `event-loop`:
-- Agendar e executar as tarefas assíncronas (corotinas)
+- Agendar e executar as tarefas assíncronas (corrotinas)
 - Lidar com operações de I/O
 - Lidar com temporizações e timeouts
 - Liberar eventos para a fonte correspondente (handler)
@@ -286,10 +286,10 @@ asyncio.run(main())
 ## 6. Síntaxe Async/Await
 
 O `async/await` foi adicionado no Python 3.5.
-As corrotinas são funções especiais que podem ter sua execução suspensa e resumida, possibilitando sua execução concorrente.
-A palavra chave `await` serve para aguarda o fim da execução de uma operação assíncrona. Quando desejamos aguardar a execução de mais de uma corrotina de forma simultânea, nós devemos utilizar o `asyncio.gather()`.
+As *coroutines* são funções especiais que podem ter sua execução suspensa e resumida, possibilitando sua execução concorrente.
+A palavra chave `await` serve para aguarda o fim da execução de uma operação assíncrona. Quando desejamos aguardar a execução de mais de uma *coroutine* de forma simultânea, nós devemos utilizar o `asyncio.gather()`.
 A partir da versão 3.8 do Python, o conceito de `Native Coroutine` foi implementado. Elas utilizam uma versão dedicada do opcode do await, resultando em um desempenho melhor e e redução do overhead de execução do código. A sintaxe `async/await` permanece a mesma, mas a sua implementação foi melhorada.
-As `Async Comprehensions` permitem utilizar o recurso de list comprehensions para criar listas utilizando o retorno de corrotinas. O mesmo pode ser utilizado com a criação de dicionários e sets.
+As `Async Comprehensions` permitem utilizar o recurso de list comprehensions para criar listas utilizando o retorno de *coroutines*. O mesmo pode ser utilizado com a criação de dicionários e sets.
 
 ```python
 # Utiliza o recurso de list comprehension para criar uma lista de tarefas utilizando um gerado assíncrono
@@ -312,63 +312,63 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Chamando corotinas simples:
+Chamando *coroutine* simples:
 
 ```python
-# Agendando e executando uma corotina simples
+# Agendando e executando uma corrotina simples
 
 import asyncio
 
-async def corotina(nome, delay):
-    print(f"Corotina {nome} iniciada - {asyncio.get_event_loop().time()}")
+async def corrotina(nome, delay):
+    print(f"Corrotina {nome} iniciada - {asyncio.get_event_loop().time()}")
     await asyncio.sleep(delay)
-    print(f"Corotina {nome} finalizada - {asyncio.get_event_loop().time()}")
+    print(f"Corrotina {nome} finalizada - {asyncio.get_event_loop().time()}")
     
 
 async def main():
-    # Prepara as corotinas utilizando o método create_task
-    # O método create_task() cria uma tarefa para execução de uma corotina, mas não a executa. A execução é feita pelo loop de eventos.
-    corotina1 = asyncio.create_task(corotina("A", 1))
-    corotina2 = asyncio.create_task(corotina("B", 2))
+    # Prepara as corrotinas utilizando o método create_task
+    # O método create_task() cria uma tarefa para execução de uma corrotina, mas não a executa. A execução é feita pelo loop de eventos.
+    corrotina1 = asyncio.create_task(corrotina("A", 1))
+    corrotina2 = asyncio.create_task(corrotina("B", 2))
 
-    # Aguarda a execução das corotinas, mas não bloqueia a execução
-    await corotina1
-    await corotina2
+    # Aguarda a execução das corrotinas, mas não bloqueia a execução
+    await corrotina1
+    await corrotina2
 
 # Cria um novo evento de loop
 if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-> ***IMPORTANTE:*** existe uma diferença entre chamar e aguardar uma corotina e criar uma task com ela utilizando o `asyncio.create_task()`. Quando apenas chamamos as corotinas, elas são executadas conforme a execução dos pontos anteriores do programa vai terminando (o await fica com um comportamento `bloqueante`). Quando invocamos elas criando corotinas (não apenas as funções assíncronas puras), o `await` não é bloqueante.
+> ***IMPORTANTE:*** existe uma diferença entre chamar e aguardar uma corrotina e criar uma task com ela utilizando o `asyncio.create_task()`. Quando apenas chamamos as corrotinas, elas são executadas conforme a execução dos pontos anteriores do programa vai terminando (o await fica com um comportamento `bloqueante`). Quando invocamos elas criando corrotinas (não apenas as funções assíncronas puras), o `await` não é bloqueante.
 
 
 ```python
-# Agendando e executando uma corotina simples
+# Agendando e executando uma coroutine simples
 
 import asyncio
 
-async def corotina(nome, delay):
-    print(f"Corotina {nome} iniciada - {asyncio.get_event_loop().time()}")
+async def corrotina(nome, delay):
+    print(f"corrotina {nome} iniciada - {asyncio.get_event_loop().time()}")
     await asyncio.sleep(delay)
-    print(f"Corotina {nome} finalizada - {asyncio.get_event_loop().time()}")
+    print(f"corrotina {nome} finalizada - {asyncio.get_event_loop().time()}")
     
 
 async def main():
-    # Prepara as corotinas utilizando o método create_task
-    # O método create_task() cria uma tarefa para execução de uma corotina, mas não a executa. A execução é feita pelo loop de eventos.
-    corotina1 = asyncio.create_task(corotina("A", 1))
-    corotina2 = asyncio.create_task(corotina("B", 2))
+    # Prepara as corrotinas utilizando o método create_task
+    # O método create_task() cria uma tarefa para execução de uma corrotina, mas não a executa. A execução é feita pelo loop de eventos.
+    corrotina1 = asyncio.create_task(corrotina("A", 1))
+    corrotina2 = asyncio.create_task(corrotina("B", 2))
 
-    # Aguarda a execução das corotinas, mas não bloqueia a execução
-    await corotina1
-    await corotina2
+    # Aguarda a execução das corrotinas, mas não bloqueia a execução
+    await corrotina1
+    await corrotina2
 
     # Chamada do exemplo anterior, mas sem a criação de tarefas
-    corotina3 = corotina("C", 3)
-    corotina4 = corotina("D", 4)
-    await corotina3
-    await corotina4
+    corrotina3 = corrotina("C", 3)
+    corrotina4 = corrotina("D", 4)
+    await corrotina3
+    await corrotina4
     
 
 # Cria um novo evento de loop
@@ -379,43 +379,43 @@ if __name__ == "__main__":
 Saída da execução do código:
 
 ```sh
-> python corotina-simples.py
-Corotina A iniciada - 428855.359
-Corotina B iniciada - 428855.359
-Corotina A finalizada - 428856.359
-Corotina B finalizada - 428857.375
-Corotina C iniciada - 428857.375
-Corotina C finalizada - 428860.375
-Corotina D iniciada - 428860.375
-Corotina D finalizada - 428864.39
+> python corrotina-simples.py
+corrotina A iniciada - 428855.359
+corrotina B iniciada - 428855.359
+corrotina A finalizada - 428856.359
+corrotina B finalizada - 428857.375
+corrotina C iniciada - 428857.375
+corrotina C finalizada - 428860.375
+corrotina D iniciada - 428860.375
+corrotina D finalizada - 428864.39
 ```
 
 Podemos criar nosso próprio `event-loop` e controlar sua execução:
 
 ```python
-# Programa para lidar com a execução de multiplas corotinas
+# Programa para lidar com a execução de multiplas corrotinas
 import asyncio
 
-async def corotina(nome_arquivo):
-    print(f"Corotina {nome_arquivo} iniciada - {asyncio.get_event_loop().time()}")
+async def corrotina(nome_arquivo):
+    print(f"corrotina {nome_arquivo} iniciada - {asyncio.get_event_loop().time()}")
     await asyncio.sleep(2)
-    print(f"Corotina {nome_arquivo} finalizada - {asyncio.get_event_loop().time()}")
-    return f"Corotina {nome_arquivo} finalizada"
+    print(f"corrotina {nome_arquivo} finalizada - {asyncio.get_event_loop().time()}")
+    return f"corrotina {nome_arquivo} finalizada"
 
 async def main():
     # Cria uma lista com os nomes dos arquivos
     arquivos = ["arquivo1.txt", "arquivo2.txt", "arquivo3.txt", "arquivo4.txt"]
-    chamada_download = [corotina(arquivo) for arquivo in arquivos]
-    # # Esse método está deprecado, mas ainda é utilizado para aguardar a execução de todas as corotinas
-    # # Utiliza o método wait() para aguardar a execução de todas as corotinas
+    chamada_download = [corrotina(arquivo) for arquivo in arquivos]
+    # # Esse método está deprecado, mas ainda é utilizado para aguardar a execução de todas as corrotinas
+    # # Utiliza o método wait() para aguardar a execução de todas as corrotinas
     # finalizada, pendente = await asyncio.wait(chamada_download, return_when=asyncio.ALL_COMPLETED)
 
     # # Exibe o resultado da execução
-    # for corotina_finalizada in finalizada:
-    #     print(corotina_finalizada.result())
+    # for corrotina_finalizada in finalizada:
+    #     print(corrotina_finalizada.result())
     
     # Versão não deprecada
-    # Utiliza o método gather() para aguardar a execução de todas as corotinas
+    # Utiliza o método gather() para aguardar a execução de todas as corrotinas
     resultados = await asyncio.gather(*chamada_download)
     for resultado in resultados:
         print(resultado)
@@ -426,7 +426,7 @@ if __name__ == "__main__":
 
 ## 7. Gerenciamento de Tasks com AsyncIO
 
-As Tasks são os blocos de construção para executar e gerenciar as operações utilizando o AsyncIO. As Tasks são um wrapper adicionado nas corotinas para trazer mais funcionalidades de controle a elas.
+As Tasks são os blocos de construção para executar e gerenciar as operações utilizando o AsyncIO. As Tasks são um wrapper adicionado nas corrotinas para trazer mais funcionalidades de controle a elas.
 
 ```python
 # Lidando com o gerenciamento de tasks no Python com Asyncio
@@ -460,7 +460,7 @@ if __name__ == "__main__":
 ```
 
 É possível verificar o estado de uma task. É importante notar algumas coisas:
-- Erros e exceções nas corotinas devem ser tratados dentro do event loop.
+- Erros e exceções nas corrotinas devem ser tratados dentro do event loop.
 - Se o result() de uma task for acessado antes dela terminar, vai resultar no lançamento de uma exceção.
 
 ```python
@@ -468,22 +468,22 @@ if __name__ == "__main__":
 
 import asyncio
 
-async def corotina1(nome):
+async def corrotina1(nome):
     await asyncio.sleep(3)
     return nome
 
-async def corotina2(nome):
-    # Corotina que lança uma exceção
+async def corrotina2(nome):
+    # corrotina que lança uma exceção
     await asyncio.sleep(5)
-    raise ValueError("Erro na corotina")
+    raise ValueError("Erro na corrotina")
     return nome
 
 # Função principal
 async def main():
     try:
         # Cria as tasks
-        task1 = asyncio.create_task(corotina1("A"))
-        task2 = asyncio.create_task(corotina2("B"))
+        task1 = asyncio.create_task(corrotina1("A"))
+        task2 = asyncio.create_task(corrotina2("B"))
 
         # Aguarda a execução das tasks
         await asyncio.sleep(1)
@@ -619,7 +619,7 @@ E o código para manipular os dados:
 import asyncio
 import aiosqlite
 
-# Cria uma corotina para criar as tabelas
+# Cria uma corrotina para criar as tabelas
 async def criar_tabelas(db_name, table_name):
     async with aiosqlite.connect(db_name) as db:
         await db.execute(f"CREATE TABLE IF NOT EXISTS {table_name} (id INTEGER PRIMARY KEY, mensagem TEXT)")
@@ -664,7 +664,7 @@ python -m pip install requests
 import asyncio
 import requests
 
-# Cria uma corotina que fica como uma ponte entre código assincrono e código sincrono
+# Cria uma corrotina que fica como uma ponte entre código assincrono e código sincrono
 async def fetch_url(url):
     # Pega o loop de eventos
     loop = asyncio.get_event_loop()
