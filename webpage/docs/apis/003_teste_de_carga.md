@@ -199,3 +199,47 @@ Acesse o endereço `http://localhost:8089` e configure o número de usuários e 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KECr2BujqtM?si=oRaHu1C62bQQf0GE" style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom:'24px' }}></iframe>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RiM1GsVSbzM?si=e4IITWxzQxbbHXCo" style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom:'24px' }}></iframe>
+
+---
+
+## 9. Proxy e Proxy Reverso
+
+Pessoal vamos analisar aqui um caso um pouco mais completo agora. Vamos ter nossa API primeiro rodando com o Flask e se conectando em um banco de dados SQLite. Mas vamos servir ela de uma maneira diferente para a aplicação. Vamos colocar um proxy reverso na frente dela. 
+
+> "Calma lá Murilão, vamos colocar o que?"
+
+Um Proxy Reverso é um servidor que fica entre o cliente e a nossa aplicação. Ele é utilizado para gerenciar como as requisições externas chegam até nossa aplicação interna. Com ele, conseguimos manter nossa aplicação rodando com comunicação HTTP internamente, enquanto usamos HTTPS externamente, com certificados SSL sendo gerenciados no proxy.
+
+> "Murilo, pera ai, o que é um proxy então?"
+
+Boa pergunta! Um proxy comum é uma forma de interceptar conexões de saída em uma rede. Ele atua em nome do cliente, repassando requisições internas para a internet, aplicando políticas como controle de acesso, autenticação ou caching. Já o proxy reverso faz o caminho contrário: ele recebe requisições externas e as encaminha para os servidores internos.
+
+| Característica     | Proxy (normal)            | Proxy Reverso            |
+| ------------------ | ------------------------- | ------------------------ |
+| Quem configura     | O cliente                 | O servidor               |
+| Esconde quem?      | O cliente (usuário final) | O servidor (backend/API) |
+| Protege quem?      | O cliente                 | O servidor               |
+| Exemplo típico     | Acesso controlado à web   | Balanceamento de carga   |
+| Ferramentas comuns | Squid, TinyProxy          | NGINX, HAProxy, Traefik  |
+
+
+:::tip[Proxy e Proxy Reverso]
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4NB0NDtOwIQ?si=yUN9vP96KAqxk6UT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ngoEzjnJ2Eo?si=t2Q0eLI7wGlcdcho" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
+
+:::
+
+Legal, agora que falamos dele, vamos configurar!! Vamos fazer isso utilizando uma ferramenta chamada [Nginx](https://nginx.org/).
+
+## 10. Exemplo de uso de Proxy Reverso
+
+Vamos trabalhar com a aplicação em Python:
+
+```python
+# app.py
+
+```
